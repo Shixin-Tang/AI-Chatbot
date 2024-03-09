@@ -1,3 +1,41 @@
-console.log(
-  "This is a starter kit for this amazing project. With 💓 By Indian Coders"
-);
+import app from "./app.js";
+import { connectToDatabase } from "./db/connection.js";
+
+// app.get("/", (req, res, next) => {
+//     return res.send("Hello AI ChatBot!");
+// });
+
+// app.get("/hello", (req, res, next) => {
+//     return res.send("Hello AI ChatBot!");
+// });
+
+// app.post("/hello", (req, res, next) => {
+//     //console.log(req.body.name);
+//     return res.send("POST: Hello, " + req.body.name + "!");
+// });
+
+// app.put("/hello", (req, res, next) => {
+//     //console.log(req.body.name);
+//     return res.send("PUT: Hello, " + req.body.name + "!");
+// });
+
+// app.delete("/hello", (req, res, next) => {
+//     //console.log(req.body.name);
+//     return res.send("DELETE: Hello, " + req.body.name + "!");
+// });
+
+// app.delete("/user/:id", (req, res, next) => {
+//     console.log(req.params.id);
+//     return res.send("DELETE: Hello, " + req.params.id + "!");
+// });
+
+//connections and listeners
+connectToDatabase()
+    .then(() => {
+        app.listen(5000, () =>
+            console.log(
+                "AI ChatBot Server started and connected to MongoDB. Listening on port 5000"
+            )
+        );
+    })
+    .catch((err) => console.log(err));
