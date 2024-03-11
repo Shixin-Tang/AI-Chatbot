@@ -75,7 +75,6 @@ export const userSignup = async (
         //send response
         return res.status(201).json({
             message: "user signup success",
-            id: user._id.toString(),
             name: user.name,
             email: user.email,
         });
@@ -137,7 +136,6 @@ export const userLogin = async (
         //send response
         return res.status(200).json({
             message: "user login success",
-            id: user._id.toString(),
             name: user.name,
             email: user.email,
         });
@@ -146,6 +144,44 @@ export const userLogin = async (
         console.log(error);
         return res.status(200).json({
             message: "user login ERROR",
+            cause: (error as Error).message,
+        });
+    }
+};
+
+export const userVerigfy = async (
+    req: Request,
+    res: Response,
+    next: NextFunction
+) => {
+    try {
+        //user token check
+        const user = await User.findById(res.locals.jwtData.id);
+        if (!user) {
+            return res.status(401).json({
+                message: "user verify ERROR",
+                cause: "user id not registered or token malfunctioned",
+            });
+        }
+
+        if (user._id.toString() !== res.locals.jwtData.id) {
+            return res.status(401).json({
+                message: "user verify ERROR",
+                cause: "token didn't match with user id",
+            });
+        }
+
+        //send response
+        return res.status(200).json({
+            message: "user verify success",
+            name: user.name,
+            email: user.email,
+        });
+    } catch (error) {
+        //handle error
+        console.log(error);
+        return res.status(200).json({
+            message: "user verify ERROR",
             cause: (error as Error).message,
         });
     }
