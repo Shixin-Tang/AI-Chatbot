@@ -2,8 +2,12 @@ import React from "react";
 import AppBar from "@mui/material/AppBar";
 import Toolbar from "@mui/material/Toolbar";
 import Logo from "./shared/Logo.tsx";
+import { useAuth } from "../context/AuthContext.tsx";
+import NavigationLink from "./shared/NavigationLink.tsx";
 
 const Header = () => {
+    const auth = useAuth();
+
     return (
         <AppBar
             sx={{
@@ -16,6 +20,40 @@ const Header = () => {
                     display: "flex",
                 }}>
                 <Logo />
+                <div>
+                    {auth?.isLoggedIn ? (
+                        <>
+                            <NavigationLink
+                                bg="#00fffc"
+                                to="/chat"
+                                text="Go to Chat"
+                                textColor="black"
+                            />
+                            <NavigationLink
+                                bg="#51538f"
+                                to="/"
+                                text="logout"
+                                textColor="white"
+                                onClick={auth.logout}
+                            />
+                        </>
+                    ) : (
+                        <>
+                            <NavigationLink
+                                bg="#00fffc"
+                                to="/login"
+                                text="Login"
+                                textColor="black"
+                            />
+                            <NavigationLink
+                                bg="#51538f"
+                                to="/signup"
+                                text="Signup"
+                                textColor="white"
+                            />
+                        </>
+                    )}
+                </div>
             </Toolbar>
         </AppBar>
     );

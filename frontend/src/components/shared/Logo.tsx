@@ -13,7 +13,7 @@ const Logo = () => {
             }}>
             <Link to="/">
                 <img
-                    src="../../../public/openai.png"
+                    src="/openai.png"
                     alt="OpenAI Logo"
                     className="image-inverted"
                     width={"30px"}
