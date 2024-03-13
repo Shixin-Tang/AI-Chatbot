@@ -4,8 +4,11 @@ import CustomizedInput from "../components/shared/CustomizedInput.tsx";
 import { IoIosLogIn } from "react-icons/io";
 import { toast } from "react-hot-toast";
 import { useAuth } from "../context/AuthContext.tsx";
+import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
 const Login = () => {
+    const navigate = useNavigate();
     const auth = useAuth();
 
     const handleLogin = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -22,6 +25,12 @@ const Login = () => {
             toast.error("Logged in Failed", { id: "login" });
         }
     };
+
+    useEffect(() => {
+        if (auth?.user) {
+            return navigate("/chat");
+        }
+    }, [auth, navigate]);
 
     return (
         <Box width={"100%"} height={"100%"} display="flex" flex={1}>

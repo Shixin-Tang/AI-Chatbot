@@ -9,7 +9,7 @@ export const generateChatCompletion = async (
     res: Response,
     next: NextFunction
 ) => {
-    const { prompt_message } = req.body;
+    const { message } = req.body;
 
     try {
         const user = await User.findById(res.locals.jwtData.id);
@@ -33,8 +33,8 @@ export const generateChatCompletion = async (
             role,
             content,
         })) as ChatCompletionRequestMessage[];
-        chats.push({ role: "user", content: prompt_message });
-        user.chats.push({ role: "user", content: prompt_message });
+        chats.push({ role: "user", content: message });
+        user.chats.push({ role: "user", content: message });
 
         //send all chats with new one to openAI API
         const config = configureOpenAI();
@@ -71,6 +71,84 @@ export const generateChatCompletion = async (
         }
         return res.status(500).json({
             message: "Something went wrong while generating chat completion",
+            cause: (error as Error).message,
+        });
+    }
+};
+
+export const sendChatsToUser = async (
+    req: Request,
+    res: Response,
+    next: NextFunction
+) => {
+    try {
+        //user token check
+        const user = await User.findById(res.locals.jwtData.id);
+        if (!user) {
+            return res.status(401).json({
+                message: "user verify ERROR",
+                cause: "user id not registered or token malfunctioned",
+            });
+        }
+
+        if (user._id.toString() !== res.locals.jwtData.id) {
+            return res.status(401).json({
+                message: "user verify ERROR",
+                cause: "token didn't match with user id",
+            });
+        }
+
+        //send response
+        return res.status(200).json({
+            message: "get chats success",
+            chats: user.chats,
+        });
+    } catch (error) {
+        //handle error
+        console.log(error);
+        return res.status(200).json({
+            message: "user verify ERROR",
+            cause: (error as Error).message,
+        });
+    }
+};
+
+export const deleteChats = async (
+    req: Request,
+    res: Response,
+    next: NextFunction
+) => {
+    try {
+        //user token check
+        const user = await User.findById(res.locals.jwtData.id);
+        if (!user) {
+            return res.status(401).json({
+                message: "user verify ERROR",
+                cause: "user id not registered or token malfunctioned",
+            });
+        }
+
+        if (user._id.toString() !== res.locals.jwtData.id) {
+            return res.status(401).json({
+                message: "user verify ERROR",
+                cause: "token didn't match with user id",
+            });
+        }
+
+        //delete chats
+        //@ts-ignore
+        user.chats = [];
+        await user.save();
+
+        //send response
+        return res.status(200).json({
+            message: "delete user chats success",
+        });
+    } catch (error) {
+        //handle error
+        console.log(error);
+        return res.status(200).json({
+            message: "delete user chats ERROR",
             cause: (error as Error).message,
         });
     }

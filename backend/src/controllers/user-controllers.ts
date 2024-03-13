@@ -186,3 +186,48 @@ export const userVerigfy = async (
         });
     }
 };
+
+export const userLogout = async (
+    req: Request,
+    res: Response,
+    next: NextFunction
+) => {
+    try {
+        //user token check
+        const user = await User.findById(res.locals.jwtData.id);
+        if (!user) {
+            return res.status(401).json({
+                message: "user verify ERROR",
+                cause: "user id not registered or token malfunctioned",
+            });
+        }
+
+        if (user._id.toString() !== res.locals.jwtData.id) {
+            return res.status(401).json({
+                message: "user verify ERROR",
+                cause: "token didn't match with user id",
+            });
+        }
+
+        res.clearCookie(COOKIE_NAME, {
+            httpOnly: true,
+            domain: "localhost",
+            signed: true,
+            path: "/",
+        });
+
+        //send response
+        return res.status(200).json({
+            message: "user logout success",
+            name: user.name,
+            email: user.email,
+        });
+    } catch (error) {
+        //handle error
+        console.log(error);
+        return res.status(200).json({
+            message: "user logout ERROR",
+            cause: (error as Error).message,
+        });
+    }
+};
