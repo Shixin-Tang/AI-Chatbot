@@ -2,7 +2,7 @@
 
 ## Description
 
-#### In today's digital era, chatbots have become an indispensable tool for enhancing user engagement and providing immediate responses to inquiries. The project aims to develop a ChatGPT Clone, an AI chatbot, utilizing the MERN stack (MongoDB, Express, React, Node.js), supplemented with TypeScript for static typing. This endeavor is inspired by a comprehensive video course by Nikhil Thadani on the freeCodeCamp.org YouTube channel. The project will not only facilitate learning and application of the MERN stack but also delve into advanced authentication, secure chat storage, and integration with OpenAI, thereby crafting a secure, scalable, and sophisticated SaaS (Software as a Service) application.
+#### In today's digital era, chatbots have become an indispensable tool for enhancing user engagement and providing immediate responses to inquiries. The project aims to develop a ChatGPT Clone, an AI chatbot, utilizing the MERN stack (MongoDB, Express, React, Node.js), supplemented with TypeScript for static typing. The project will not only facilitate learning and application of the MERN stack but also delve into advanced authentication, secure chat storage, and integration with OpenAI, thereby crafting a secure, scalable, and sophisticated SaaS (Software as a Service) application.
 
 ## Technology Stack
 
