@@ -31,4 +31,5 @@
 #### Elegant and Responsive UI Design:
 - Utilizing React and Material UI, the project should deliver a modern, elegant chat interface that is fully responsive across devices. The design should focus on user experience, with intuitive navigation and a clean, attractive aesthetic.
 
-#### Integration with OpenAI: The backend, built with Node.js and Express, should integrate seamlessly with OpenAI to process and respond to user queries. This involves setting up secure API calls and managing responses to enhance the chatbot's functionality.
+#### Integration with OpenAI:
+- The backend, built with Node.js and Express, should integrate seamlessly with OpenAI to process and respond to user queries. This involves setting up secure API calls and managing responses to enhance the chatbot's functionality.
